@@ -1,0 +1,204 @@
+{
+  "openapi" : "3.0.1",
+  "info" : {
+    "title" : "MVRPBASICSANITY",
+    "version" : "v01"
+  },
+  "servers" : [ {
+    "url" : "https://oicn-l2-mthly-upg-paasdevoic-stb.integration.dev.ocp.oc-test.com:443/ic/api/integration/v1/flows/rest/MVRPBASICSANITY/1.0"
+  } ],
+  "paths" : {
+    "/employee/{id}" : {
+      "delete" : {
+        "operationId" : "deleteEmployee",
+        "parameters" : [ {
+          "name" : "id",
+          "in" : "path",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "500" : {
+            "description" : "Faults",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/APIInvocationError"
+                }
+              }
+            }
+          },
+          "default" : {
+            "description" : "A sample description of the Response",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/deleteEmployee-response-wrapper"
+                }
+              }
+            }
+          }
+        },
+        "security" : [ {
+          "oauth2Authentication" : [ ]
+        }, {
+          "basicAuthentication" : [ ]
+        } ]
+      }
+    },
+    "/employee" : {
+      "get" : {
+        "operationId" : "getEmployee",
+        "parameters" : [ {
+          "name" : "id",
+          "in" : "query",
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "500" : {
+            "description" : "Faults",
+            "content" : { }
+          },
+          "default" : {
+            "description" : "A sample description of the Response",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/getEmployee-components.schemas.getEmployee-response-wrapper"
+                }
+              }
+            }
+          }
+        },
+        "security" : [ {
+          "oauth2Authentication" : [ ]
+        }, {
+          "basicAuthentication" : [ ]
+        } ]
+      },
+      "post" : {
+        "operationId" : "createEmployee",
+        "requestBody" : {
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/createEmployee-request-wrapper"
+              }
+            }
+          },
+          "required" : false
+        },
+        "responses" : {
+          "204" : {
+            "description" : "No content defined for this response",
+            "content" : { }
+          }
+        },
+        "security" : [ {
+          "oauth2Authentication" : [ ]
+        }, {
+          "basicAuthentication" : [ ]
+        } ]
+      }
+    }
+  },
+  "components" : {
+    "schemas" : {
+      "deleteEmployee-response-wrapper" : {
+        "required" : [ "status" ],
+        "type" : "object",
+        "properties" : {
+          "status" : {
+            "type" : "string"
+          }
+        }
+      },
+      "APIInvocationError" : {
+        "required" : [ "detail", "errorCode", "errorDetails", "title", "type" ],
+        "type" : "object",
+        "properties" : {
+          "type" : {
+            "type" : "string"
+          },
+          "title" : {
+            "type" : "string"
+          },
+          "detail" : {
+            "type" : "string"
+          },
+          "errorCode" : {
+            "type" : "string"
+          },
+          "errorDetails" : {
+            "minItems" : 1,
+            "type" : "array",
+            "items" : {
+              "required" : [ "errorCode", "errorPath", "instance", "title", "type" ],
+              "type" : "object",
+              "properties" : {
+                "instance" : {
+                  "type" : "string"
+                },
+                "errorCode" : {
+                  "type" : "string"
+                },
+                "type" : {
+                  "type" : "string"
+                },
+                "title" : {
+                  "type" : "string"
+                },
+                "errorPath" : {
+                  "type" : "string"
+                }
+              }
+            }
+          }
+        }
+      },
+      "getEmployee-components.schemas.getEmployee-response-wrapper" : {
+        "required" : [ "id", "name" ],
+        "type" : "object",
+        "properties" : {
+          "id" : {
+            "type" : "string"
+          },
+          "name" : {
+            "type" : "string"
+          }
+        }
+      },
+      "createEmployee-request-wrapper" : {
+        "required" : [ "name" ],
+        "type" : "object",
+        "properties" : {
+          "name" : {
+            "type" : "string"
+          }
+        }
+      }
+    },
+    "securitySchemes" : {
+      "oauth2Authentication" : {
+        "type" : "oauth2",
+        "flows" : {
+          "authorizationCode" : {
+            "authorizationUrl" : "https://idcs-1e14d45060a6492cb64c187ee9ac8177.identity.c9dev2.oc9qadev.com:443/oauth2/v1/authorize",
+            "tokenUrl" : "https://idcs-1e14d45060a6492cb64c187ee9ac8177.identity.c9dev2.oc9qadev.com:443/oauth2/v1/token",
+            "scopes" : {
+              "https://oicn-l2-mthly-upg-paasdevoic-stb.integration.dev.ocp.oc-test.com:443urn:opc:resource:consumer::all" : "all"
+            }
+          }
+        }
+      },
+      "basicAuthentication" : {
+        "type" : "http",
+        "scheme" : "basic"
+      }
+    }
+  }
+}
