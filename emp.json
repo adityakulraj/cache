@@ -1,16 +1,23 @@
 {
   "openapi" : "3.0.1",
   "info" : {
-    "title" : "PROD_CON_EMP",
+    "title" : "MVRPBASICSANITY_1673243917",
     "version" : "01.00.0000"
   },
   "servers" : [ {
-    "url" : "https://dipoosar.integration.ocp.oc-test.com/ic/api/integration/v1/flows/rest/PROD_CON_EMP/1.0"
+    "url" : "https://dipoosar.integration.ocp.oc-test.com/ic/api/integration/v1/flows/rest/MVRPBASICSANITY_1673243917/1.0"
   } ],
   "paths" : {
     "/employee" : {
       "get" : {
         "operationId" : "getEmployee",
+        "parameters" : [ {
+          "name" : "id",
+          "in" : "query",
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
         "responses" : {
           "500" : {
             "description" : "Faults",
@@ -21,15 +28,42 @@
             "content" : {
               "application/json" : {
                 "schema" : {
-                  "$ref" : "#/components/schemas/components.schemas.getEmployee-response-wrapper"
+                  "$ref" : "#/components/schemas/getEmployee-response-wrapper"
                 }
               }
             }
           }
         },
         "security" : [ {
+          "oauth2Authentication" : [ ]
+        }, {
           "basicAuthentication" : [ ]
         } ]
+      },
+      "post" : {
+        "operationId" : "createEmployee",
+        "requestBody" : {
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/createEmployee-request-wrapper"
+              }
+            }
+          },
+          "required" : false
+        },
+        "responses" : {
+          "204" : {
+            "description" : "No content defined for this response",
+            "content" : { }
+          }
+        },
+        "security" : [ {
+          "oauth2Authentication" : [ ]
+        }, {
+          "basicAuthentication" : [ ]
+        } ],
+        "x-codegen-request-body-name" : "request-wrapper"
       },
       "patch" : {
         "operationId" : "updateEmployee",
@@ -44,7 +78,7 @@
           "content" : {
             "application/json" : {
               "schema" : {
-                "$ref" : "#/components/schemas/components.schemas.updateEmployee-request-wrapper"
+                "$ref" : "#/components/schemas/updateEmployee-request-wrapper"
               }
             }
           },
@@ -53,45 +87,88 @@
         "responses" : {
           "500" : {
             "description" : "Faults",
-            "content" : { }
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/APIInvocationError"
+                }
+              }
+            }
           },
           "default" : {
             "description" : "A sample description of the Response",
             "content" : {
               "application/json" : {
                 "schema" : {
-                  "$ref" : "#/components/schemas/components.schemas.updateEmployee-response-wrapper"
+                  "$ref" : "#/components/schemas/updateEmployee-response-wrapper"
                 }
               }
             }
           }
         },
         "security" : [ {
+          "oauth2Authentication" : [ ]
+        }, {
           "basicAuthentication" : [ ]
         } ],
-        "x-codegen-request-body-name" : "components.schemas.updateEmployee-request-wrapper"
+        "x-codegen-request-body-name" : "request-wrapper"
       }
     },
     "/employee/{id}/{location}" : {
       "delete" : {
         "operationId" : "deleteEmployee",
+        "parameters" : [ {
+          "name" : "location",
+          "in" : "path",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "id",
+          "in" : "path",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "summary",
+          "in" : "query",
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "details",
+          "in" : "query",
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
         "responses" : {
           "500" : {
             "description" : "Faults",
-            "content" : { }
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/APIInvocationError"
+                }
+              }
+            }
           },
           "default" : {
             "description" : "A sample description of the Response",
             "content" : {
               "application/json" : {
                 "schema" : {
-                  "$ref" : "#/components/schemas/components.schemas.deleteEmployee-response-wrapper"
+                  "$ref" : "#/components/schemas/deleteEmployee-response-wrapper"
                 }
               }
             }
           }
         },
         "security" : [ {
+          "oauth2Authentication" : [ ]
+        }, {
           "basicAuthentication" : [ ]
         } ]
       }
@@ -99,6 +176,18 @@
   },
   "components" : {
     "schemas" : {
+      "getEmployee-response-wrapper" : {
+        "required" : [ "id", "name" ],
+        "type" : "object",
+        "properties" : {
+          "id" : {
+            "type" : "string"
+          },
+          "name" : {
+            "type" : "string"
+          }
+        }
+      },
       "APIInvocationError" : {
         "required" : [ "detail", "errorCode", "errorDetails", "title", "type" ],
         "type" : "object",
@@ -141,9 +230,57 @@
             }
           }
         }
+      },
+      "createEmployee-request-wrapper" : {
+        "required" : [ "name" ],
+        "type" : "object",
+        "properties" : {
+          "name" : {
+            "type" : "string"
+          }
+        }
+      },
+      "updateEmployee-request-wrapper" : {
+        "required" : [ "name" ],
+        "type" : "object",
+        "properties" : {
+          "name" : {
+            "type" : "string"
+          }
+        }
+      },
+      "updateEmployee-response-wrapper" : {
+        "required" : [ "updatedName" ],
+        "type" : "object",
+        "properties" : {
+          "updatedName" : {
+            "type" : "string"
+          }
+        }
+      },
+      "deleteEmployee-response-wrapper" : {
+        "required" : [ "status" ],
+        "type" : "object",
+        "properties" : {
+          "status" : {
+            "type" : "string"
+          }
+        }
       }
     },
     "securitySchemes" : {
+      "oauth2Authentication" : {
+        "type" : "oauth2",
+        "flows" : {
+          "authorizationCode" : {
+            "authorizationUrl" : "https://<idcs_host>/oauth2/v1/authorize",
+            "tokenUrl" : "https://<idcs_host>/oauth2/v1/token",
+            "scopes" : {
+              "https://dipoosar.integration.ocp.oc-test.comurn:opc:resource:consumer::all" : "all"
+            }
+          }
+        }
+      },
       "basicAuthentication" : {
         "type" : "http",
         "scheme" : "basic"
