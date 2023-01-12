@@ -1,0 +1,154 @@
+{
+  "openapi" : "3.0.1",
+  "info" : {
+    "title" : "PROD_CON_EMP",
+    "version" : "01.00.0000"
+  },
+  "servers" : [ {
+    "url" : "https://dipoosar.integration.ocp.oc-test.com/ic/api/integration/v1/flows/rest/PROD_CON_EMP/1.0"
+  } ],
+  "paths" : {
+    "/employee" : {
+      "get" : {
+        "operationId" : "getEmployee",
+        "responses" : {
+          "500" : {
+            "description" : "Faults",
+            "content" : { }
+          },
+          "default" : {
+            "description" : "A sample description of the Response",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/components.schemas.getEmployee-response-wrapper"
+                }
+              }
+            }
+          }
+        },
+        "security" : [ {
+          "basicAuthentication" : [ ]
+        } ]
+      },
+      "patch" : {
+        "operationId" : "updateEmployee",
+        "parameters" : [ {
+          "name" : "updatedOn",
+          "in" : "query",
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "requestBody" : {
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/components.schemas.updateEmployee-request-wrapper"
+              }
+            }
+          },
+          "required" : false
+        },
+        "responses" : {
+          "500" : {
+            "description" : "Faults",
+            "content" : { }
+          },
+          "default" : {
+            "description" : "A sample description of the Response",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/components.schemas.updateEmployee-response-wrapper"
+                }
+              }
+            }
+          }
+        },
+        "security" : [ {
+          "basicAuthentication" : [ ]
+        } ],
+        "x-codegen-request-body-name" : "components.schemas.updateEmployee-request-wrapper"
+      }
+    },
+    "/employee/{id}/{location}" : {
+      "delete" : {
+        "operationId" : "deleteEmployee",
+        "responses" : {
+          "500" : {
+            "description" : "Faults",
+            "content" : { }
+          },
+          "default" : {
+            "description" : "A sample description of the Response",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/components.schemas.deleteEmployee-response-wrapper"
+                }
+              }
+            }
+          }
+        },
+        "security" : [ {
+          "basicAuthentication" : [ ]
+        } ]
+      }
+    }
+  },
+  "components" : {
+    "schemas" : {
+      "APIInvocationError" : {
+        "required" : [ "detail", "errorCode", "errorDetails", "title", "type" ],
+        "type" : "object",
+        "properties" : {
+          "type" : {
+            "type" : "string"
+          },
+          "title" : {
+            "type" : "string"
+          },
+          "detail" : {
+            "type" : "string"
+          },
+          "errorCode" : {
+            "type" : "string"
+          },
+          "errorDetails" : {
+            "minItems" : 1,
+            "type" : "array",
+            "items" : {
+              "required" : [ "errorCode", "errorPath", "instance", "title", "type" ],
+              "type" : "object",
+              "properties" : {
+                "type" : {
+                  "type" : "string"
+                },
+                "instance" : {
+                  "type" : "string"
+                },
+                "title" : {
+                  "type" : "string"
+                },
+                "errorPath" : {
+                  "type" : "string"
+                },
+                "errorCode" : {
+                  "type" : "string"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "securitySchemes" : {
+      "basicAuthentication" : {
+        "type" : "http",
+        "scheme" : "basic"
+      }
+    }
+  },
+  "x-original-swagger-version" : "2.0"
+}
