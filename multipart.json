@@ -1,0 +1,238 @@
+{
+  "openapi" : "3.0.1",
+  "info" : {
+    "title" : "TESTATTACHMENTSMVRP",
+    "version" : "v01"
+  },
+  "servers" : [ {
+    "url" : "https://akaushal-bom.subnet1ad1mum.devintegra02bom.oraclevcn.com:7004/ic/api/integration/v1/flows/rest/TESTATTACHMENTSMVRP/1.0"
+  } ],
+  "paths" : {
+    "/attachments/multiform/{id}" : {
+      "post" : {
+        "operationId" : "testMultipartFormdata",
+        "parameters" : [ {
+          "name" : "id",
+          "in" : "path",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "requestBody" : {
+          "content" : {
+            "multipart/form-data" : {
+              "schema" : {
+                "type" : "object",
+                "properties" : {
+                  "files" : {
+                    "type" : "array",
+                    "description" : "Files uploading part",
+                    "items" : {
+                      "type" : "string",
+                      "format" : "binary"
+                    }
+                  }
+                },
+                "description" : "The main schema representing the multipart body."
+              }
+            }
+          },
+          "required" : true
+        },
+        "responses" : {
+          "500" : {
+            "description" : "Faults",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/APIInvocationError"
+                }
+              }
+            }
+          },
+          "default" : {
+            "description" : "A sample description of the Response",
+            "content" : {
+              "multipart/form-data" : {
+                "schema" : {
+                  "type" : "object",
+                  "properties" : {
+                    "files" : {
+                      "type" : "array",
+                      "description" : "Files uploading part",
+                      "items" : {
+                        "type" : "string",
+                        "format" : "binary"
+                      }
+                    }
+                  },
+                  "description" : "The main schema representing the multipart body."
+                }
+              }
+            }
+          }
+        },
+        "security" : [ {
+          "oauth2Authentication" : [ ]
+        }, {
+          "basicAuthentication" : [ ]
+        } ]
+      }
+    },
+    "/attachments/multipart" : {
+      "post" : {
+        "operationId" : "testMultipartMixed",
+        "requestBody" : {
+          "description" : "The configured Rest trigger request body.",
+          "content" : {
+            "multipart/mixed" : {
+              "schema" : {
+                "type" : "object",
+                "properties" : {
+                  "files" : {
+                    "type" : "array",
+                    "description" : "Files uploading part",
+                    "items" : {
+                      "type" : "string",
+                      "format" : "binary"
+                    }
+                  },
+                  "data" : {
+                    "$ref" : "#/components/schemas/testMultipartMixed-request-wrapper"
+                  }
+                },
+                "description" : "The main schema representing the multipart body."
+              }
+            }
+          },
+          "required" : false
+        },
+        "responses" : {
+          "500" : {
+            "description" : "Faults",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/APIInvocationError"
+                }
+              }
+            }
+          },
+          "default" : {
+            "description" : "The configured REST trigger response.",
+            "content" : {
+              "multipart/mixed" : {
+                "schema" : {
+                  "type" : "object",
+                  "properties" : {
+                    "files" : {
+                      "type" : "array",
+                      "description" : "Files uploading part",
+                      "items" : {
+                        "type" : "string",
+                        "format" : "binary"
+                      }
+                    },
+                    "data" : {
+                      "$ref" : "#/components/schemas/testMultipartMixed-response-wrapper"
+                    }
+                  },
+                  "description" : "The main schema representing the multipart body."
+                }
+              }
+            }
+          }
+        },
+        "security" : [ {
+          "oauth2Authentication" : [ ]
+        }, {
+          "basicAuthentication" : [ ]
+        } ]
+      }
+    }
+  },
+  "components" : {
+    "schemas" : {
+      "APIInvocationError" : {
+        "required" : [ "detail", "errorCode", "errorDetails", "title", "type" ],
+        "type" : "object",
+        "properties" : {
+          "type" : {
+            "type" : "string"
+          },
+          "title" : {
+            "type" : "string"
+          },
+          "detail" : {
+            "type" : "string"
+          },
+          "errorCode" : {
+            "type" : "string"
+          },
+          "errorDetails" : {
+            "minItems" : 1,
+            "type" : "array",
+            "items" : {
+              "required" : [ "errorCode", "errorPath", "instance", "title", "type" ],
+              "type" : "object",
+              "properties" : {
+                "instance" : {
+                  "type" : "string"
+                },
+                "errorCode" : {
+                  "type" : "string"
+                },
+                "type" : {
+                  "type" : "string"
+                },
+                "title" : {
+                  "type" : "string"
+                },
+                "errorPath" : {
+                  "type" : "string"
+                }
+              }
+            }
+          }
+        }
+      },
+      "testMultipartMixed-request-wrapper" : {
+        "required" : [ "status" ],
+        "type" : "object",
+        "properties" : {
+          "status" : {
+            "type" : "string"
+          }
+        }
+      },
+      "testMultipartMixed-response-wrapper" : {
+        "required" : [ "stat" ],
+        "type" : "object",
+        "properties" : {
+          "stat" : {
+            "type" : "string"
+          }
+        }
+      }
+    },
+    "securitySchemes" : {
+      "oauth2Authentication" : {
+        "type" : "oauth2",
+        "flows" : {
+          "authorizationCode" : {
+            "authorizationUrl" : "https://<idcs_host>/oauth2/v1/authorize",
+            "tokenUrl" : "https://<idcs_host>/oauth2/v1/token",
+            "scopes" : {
+              "https://akaushal-bom.subnet1ad1mum.devintegra02bom.oraclevcn.com:7004/urn:opc:resource:consumer::all" : "all"
+            }
+          }
+        }
+      },
+      "basicAuthentication" : {
+        "type" : "http",
+        "scheme" : "basic"
+      }
+    }
+  }
+}
